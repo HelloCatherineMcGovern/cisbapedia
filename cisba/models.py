@@ -22,12 +22,18 @@ class Author(models.Model):
         """Return a string representation of the model."""
         return self.text
 
+class Tag(models.Model):
+    tag_text = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.title
 
 class Article(models.Model):
     # The name of the person who wrote the article
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     text = models.TextField()
+    tag = models.ManyToManyField(Tag)
     date_added = models.DateTimeField(auto_now_add=True)
 
     class Meta:
